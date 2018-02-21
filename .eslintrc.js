@@ -96,7 +96,7 @@ module.exports = {
         "aspects": [
           "invalidHref"
         ]
-      }
+      },
     ]
   },
   "plugins": [

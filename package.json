@@ -3,14 +3,19 @@
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
-    "autoprefixer-stylus": "0.10.0",
-    "babel-eslint": "^7.1.1",
-    "concurrently": "3.0.0",
-    "eslint": "^3.12.2",
-    "eslint-plugin-flowtype": "^2.29.1",
-    "eslint-plugin-jsx-a11y": "^3.0.2",
-    "eslint-plugin-react": "^6.8.0",
+    "autoprefixer-stylus": "0.14.0",
+    "babel-eslint": "^8.2.2",
+    "concurrently": "3.5.1",
+    "eslint-plugin-flowtype": "^2.45.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "eslint": "^4.18.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-prettier": "^2.6.0",
     "react-scripts": "0.6.1",
+    "prettier": "^1.10.2",
     "stylus": "0.54.5"
   },
   "dependencies": {
@@ -28,8 +33,5 @@
     "eject": "react-scripts eject",
     "styles": "stylus -u autoprefixer-stylus ./src/css/style.styl -o ./src/css/style.css",
     "styles:watch": "stylus -u autoprefixer-stylus -w ./src/css/style.styl -o ./src/css/style.css"
-  },
-  "eslintConfig": {
-    "extends": "./node_modules/react-scripts/.eslintrc"
   }
 }
