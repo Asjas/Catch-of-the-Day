@@ -1,8 +1,7 @@
 module.exports = {
   "extends": [
-    "airbnb",
+    "airbnb-base",
     "prettier",
-    "prettier/react"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -30,13 +29,16 @@ module.exports = {
     ],
     "no-param-reassign": [
       2,
-      {
-        "props": false
-      }
     ],
     "no-console": 0,
     "import/prefer-default-export": 0,
     "import": 0,
+    "no-plusplus": ["error", {
+      "allowForLoopAfterthoughts": true
+    }],
+    "class-methods-use-this": ["error", {
+      "exceptMethods": ["render"]
+    }],
     "func-names": 0,
     "space-before-function-paren": 0,
     "comma-dangle": 0,
@@ -44,20 +46,6 @@ module.exports = {
     "import/extensions": 0,
     "no-underscore-dangle": 0,
     "consistent-return": 0,
-    "react/display-name": 1,
-    "react/react-in-jsx-scope": 0,
-    "react/forbid-prop-types": 0,
-    "react/no-unescaped-entities": 0,
-    "jsx-a11y/accessible-emoji": 0,
-    "react/jsx-filename-extension": [
-      1,
-      {
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
-      }
-    ],
     "radix": 0,
     "no-shadow": [
       2,
@@ -84,20 +72,11 @@ module.exports = {
     "prettier/prettier": [
       "error",
       {
-        "trailingComma": "es5",
+        "trailingComma": "all",
         "singleQuote": true,
         "printWidth": 120,
       }
     ],
-    "jsx-a11y/href-no-hash": "off",
-    "jsx-a11y/anchor-is-valid": [
-      "warn",
-      {
-        "aspects": [
-          "invalidHref"
-        ]
-      },
-    ]
   },
   "plugins": [
     "prettier"
