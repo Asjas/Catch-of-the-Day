@@ -600,8 +600,8 @@ input[type=submit].success:after {
 }
 button.github,
 input[type=submit].github,
-button.facebook,
-input[type=submit].facebook,
+button.google,
+input[type=submit].google,
 button.twitter,
 input[type=submit].twitter {
   border: 0;
@@ -613,19 +613,19 @@ input[type=submit].twitter {
 }
 button.github,
 input[type=submit].github {
-  background: #82d465;
+  background: #444;
 }
 button.github:after,
 input[type=submit].github:after {
-  background: #5cc437;
+  background: #363636;
 }
-button.facebook,
-input[type=submit].facebook {
-  background: #3864a3;
+button.google,
+input[type=submit].google {
+  background: #4885ed;
 }
-button.facebook:after,
-input[type=submit].facebook:after {
-  background: #2d5082;
+button.google:after,
+input[type=submit].google:after {
+  background: #1661e1;
 }
 button.twitter,
 input[type=submit].twitter {
