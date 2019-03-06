@@ -3,27 +3,26 @@
   "version": "0.0.3",
   "private": true,
   "devDependencies": {
-    "concurrently": "3.5.1",
-    "react-scripts": "1.1.1"
+    "concurrently": "4.1.0",
+    "react-scripts": "2.1.5"
   },
   "dependencies": {
     "autoprefixer-stylus": "0.14.0",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-import": "^2.10.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-prettier": "^2.6.0",
-    "eslint-plugin-react": "^7.7.0",
-    "firebase": "^4.12.1",
-    "prop-types": "^15.6.1",
-    "prettier": "^1.11.1",
-    "re-base": "3.2.2",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
-    "react-router-dom": "^4.2.2",
-    "react-transition-group": "^2.3.0",
-    "serve": "^6.5.3",
+    "eslint": "5.12.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "firebase": "^5.8.5",
+    "prop-types": "^15.7.2",
+    "prettier": "^1.16.4",
+    "re-base": "4.0.0",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-router-dom": "^4.3.1",
+    "react-transition-group": "^2.6.0",
     "stylus": "0.54.5"
   },
   "scripts": {
@@ -34,5 +33,11 @@
     "eject": "react-scripts eject",
     "styles": "stylus -u autoprefixer-stylus ./src/css/style.styl -o ./src/css/style.css",
     "styles:watch": "stylus -u autoprefixer-stylus -w ./src/css/style.styl -o ./src/css/style.css"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
