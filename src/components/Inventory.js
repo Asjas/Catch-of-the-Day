@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import firebase from 'firebase';
-import Login from './Login.jsx';
-import AddFishForm from './AddFishForm.jsx';
-import EditFishForm from './EditFishForm.jsx';
+import Login from './Login';
+import AddFishForm from './AddFishForm';
+import EditFishForm from './EditFishForm';
 import base, { firebaseApp } from '../base';
 
 class Inventory extends React.Component {

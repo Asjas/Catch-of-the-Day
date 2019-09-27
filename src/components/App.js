@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Header from './Header.jsx';
-import Inventory from './Inventory.jsx';
-import Order from './Order.jsx';
-import Fish from './Fish.jsx';
+import Header from './Header';
+import Inventory from './Inventory';
+import Order from './Order';
+import Fish from './Fish';
 import sampleFishes from '../sample-fishes';
 import base from '../base';
 

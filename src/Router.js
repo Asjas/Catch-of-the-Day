@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import StorePicker from './StorePicker.jsx';
-import App from './App.jsx';
-import NotFound from './NotFound.jsx';
+import StorePicker from './components/StorePicker';
+import App from './components/App';
+import NotFound from './components/NotFound';
 
 const Router = () => (
   <BrowserRouter>
