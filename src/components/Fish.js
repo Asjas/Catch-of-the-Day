@@ -5,6 +5,7 @@ import { formatPrice } from '../helpers';
 
 const Fish = ({ addToOrder, index, details: { image, name, desc, price, status } }) => {
   const isAvailable = status === 'available';
+
   return (
     <li className="menu-fish">
       <img src={image} alt={name} />
@@ -25,7 +26,7 @@ const Fish = ({ addToOrder, index, details: { image, name, desc, price, status }
 
 Fish.propTypes = {
   addToOrder: PropTypes.func,
-  index: PropTypes.number,
+  index: PropTypes.string,
   details: PropTypes.shape({
     image: PropTypes.string,
     name: PropTypes.string,
