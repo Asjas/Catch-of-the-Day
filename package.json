@@ -1,38 +1,58 @@
 {
   "name": "cotd",
-  "version": "0.0.3",
-  "private": true,
-  "devDependencies": {
-    "concurrently": "4.1.0",
-    "react-scripts": "2.1.5"
-  },
-  "dependencies": {
-    "autoprefixer-stylus": "0.14.0",
-    "eslint": "5.12.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^4.1.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-prettier": "^3.0.1",
-    "eslint-plugin-react": "^7.12.4",
-    "firebase": "^5.8.5",
-    "prop-types": "^15.7.2",
-    "prettier": "^1.16.4",
-    "re-base": "4.0.0",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "react-router-dom": "^4.3.1",
-    "react-transition-group": "^2.6.0",
-    "stylus": "0.54.5"
+  "version": "0.0.0",
+  "engines": {
+    "node": ">=10.x"
   },
   "scripts": {
     "start": "react-scripts start",
     "watch": "concurrently --names \"webpack, stylus\" --prefix name \"npm run start\" \"npm run styles:watch\"",
     "build": "react-scripts build",
-    "now-build": "react-scripts build",
+    "lint": "eslint .",
     "eject": "react-scripts eject",
     "styles": "stylus -u autoprefixer-stylus ./src/css/style.styl -o ./src/css/style.css",
     "styles:watch": "stylus -u autoprefixer-stylus -w ./src/css/style.styl -o ./src/css/style.css"
+  },
+  "dependencies": {
+    "autoprefixer-stylus": "1.0.0",
+    "firebase": "^7.0.0",
+    "prop-types": "^15.7.2",
+    "re-base": "4.0.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-router-dom": "^5.1.0",
+    "react-scripts": "3.1.2",
+    "react-transition-group": "^4.3.0",
+    "stylus": "0.54.7"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "concurrently": "4.1.2",
+    "eslint": "6.4.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^2.0.1",
+    "husky": "^3.0.5",
+    "lint-staged": "^9.4.0",
+    "prettier": "^1.18.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.+(js)": [
+      "eslint --fix"
+    ],
+    "*.+(js|jsx|json|yml|yaml|css|less|scss|ts|tsx|md|mdx|graphql)": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "browserslist": [
     ">0.2%",
