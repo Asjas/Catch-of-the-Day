@@ -57,3 +57,5 @@ typings/
 # dotenv environment variables file
 .env
 
+# create-react-app build folder
+build
