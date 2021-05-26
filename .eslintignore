@@ -1,2 +1,24 @@
-node_modules/
-build/
+# don't ever lint node_modules
+node_modules
+
+# don't lint build output (make sure it's set to your correct build folder name)
+dist
+build
+
+# don't lint cache output
+.cache
+.next
+.vercel
+.keystone
+
+# don't lint nyc coverage output
+coverage
+
+# don't link vscode project settings
+.vscode
+
+# don't lint tooling config files
+postcss.config.js
+remix.config.js
+jest.setup.js
+tailwind.config.js

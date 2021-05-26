@@ -1,14 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
-import { formatPrice } from '../helpers';
+import { formatPrice } from "../helpers";
 
-const Order = ({ fishes, order, deleteOrder }) => {
-  const renderOrder = key => {
+interface Fish {
+  name: string;
+  price: number;
+  status: string;
+  desc: string;
+  image: string;
+}
+
+type OrderProps = {
+  fishes: [Fish];
+  order: [any];
+  deleteOrder(id: string): void;
+};
+
+function Order({ fishes, order, deleteOrder }: OrderProps) {
+  function renderOrder(key: string) {
     const fish = fishes[key];
     const count = order[key];
-    const isAvailable = fish && fish.status === 'available';
+    const isAvailable = fish && fish.status === "available";
     // make sure the fish is loaded before we continue
     if (!fish) return null;
 
@@ -17,7 +29,7 @@ const Order = ({ fishes, order, deleteOrder }) => {
         <CSSTransition classNames="order" key={key} timeout={{ enter: 250, exit: 250 }}>
           <li key={key}>
             Sorry
-            {fish ? fish.name : 'fish'}
+            {fish ? fish.name : "fish"}
             is no longer available
           </li>
         </CSSTransition>
@@ -33,23 +45,22 @@ const Order = ({ fishes, order, deleteOrder }) => {
                 <span>{count}</span>
               </CSSTransition>
             </TransitionGroup>
-            lbs
-            {' '}
-            {fish.name}
-            {' '}
-            {formatPrice(count * fish.price)}
-            <button onClick={() => deleteOrder(key)}>&times;</button>
+            lbs {fish.name} {formatPrice(count * fish.price)}
+            <button type="button" onClick={() => deleteOrder(key)}>
+              &times;
+            </button>
           </span>
         </li>
       </CSSTransition>
     );
-  };
+  }
 
   const orderIds = Object.keys(order);
+
   const total = orderIds.reduce((prevTotal, key) => {
     const fish = fishes[key];
     const count = order[key];
-    const isAvailable = fish && fish.status === 'available';
+    const isAvailable = fish && fish.status === "available";
 
     if (isAvailable) {
       return prevTotal + count * fish.price;
@@ -61,21 +72,13 @@ const Order = ({ fishes, order, deleteOrder }) => {
   return (
     <div className="order-wrap">
       <h2>Order</h2>
-      <TransitionGroup component="ul" className="order">
-        {orderIds.map(renderOrder)}
-      </TransitionGroup>
+      <TransitionGroup className="order">{orderIds.map(renderOrder)}</TransitionGroup>
       <div className="total">
         Total:
         <strong>{formatPrice(total)}</strong>
       </div>
     </div>
   );
-};
-
-Order.propTypes = {
-  fishes: PropTypes.object,
-  order: PropTypes.object,
-  deleteOrder: PropTypes.func,
-};
+}
 
 export default Order;

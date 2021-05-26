@@ -1,16 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { FormEvent, useRef } from "react";
 
-import { getFunName } from '../helpers.js';
+import { getFunName } from "../helpers";
 
-const StorePicker = ({ history }) => {
-  const myInput = React.createRef();
+type StorePickerProps = {
+  history: History;
+};
 
-  const goToStore = event => {
+function StorePicker({ history }: StorePickerProps) {
+  const myInput = useRef<HTMLInputElement>(null);
+
+  const goToStore = (event: FormEvent<HTMLFormElement>) => {
     // Prevent form from submitted
     event.preventDefault();
     // Get input
-    const storeName = myInput.current.value;
+    const storeName = myInput.current?.value ?? "";
     // Change the page to /store/:id
     history.push(`/store/${storeName}`);
   };
@@ -22,10 +25,6 @@ const StorePicker = ({ history }) => {
       <button type="submit">Visit Store</button>
     </form>
   );
-};
-
-StorePicker.propTypes = {
-  history: PropTypes.object,
-};
+}
 
 export default StorePicker;
