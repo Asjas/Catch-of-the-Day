@@ -1,21 +1,20 @@
 import { FormEvent, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { getFunName } from "../helpers";
 
-type StorePickerProps = {
-  history: History;
-};
-
-function StorePicker({ history }: StorePickerProps) {
+function StorePicker() {
   const myInput = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   const goToStore = (event: FormEvent<HTMLFormElement>) => {
     // Prevent form from submitted
     event.preventDefault();
     // Get input
     const storeName = myInput.current?.value ?? "";
+
     // Change the page to /store/:id
-    history.push(`/store/${storeName}`);
+    navigate(`/store/${storeName}`, { replace: true });
   };
 
   return (

@@ -1,20 +1,7 @@
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import { formatPrice } from "../helpers";
-
-interface Fish {
-  name: string;
-  price: number;
-  status: string;
-  desc: string;
-  image: string;
-}
-
-type OrderProps = {
-  fishes: [Fish];
-  order: [any];
-  deleteOrder(id: string): void;
-};
+import type { OrderProps } from "../types";
 
 function Order({ fishes, order, deleteOrder }: OrderProps) {
   function renderOrder(key: string) {

@@ -1,6 +1,4 @@
-type LoginProps = {
-  authenticate(arg1: string): void;
-};
+import type { LoginProps } from "../types";
 
 function Login(props: LoginProps) {
   return (

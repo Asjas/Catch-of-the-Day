@@ -1,113 +1,121 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Header from './Header';
-import Inventory from './Inventory';
-import Order from './Order';
-import Fish from './Fish';
-import sampleFishes from '../sample-fishes';
-import base from '../base';
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-class App extends React.Component {
-  static propTypes = {
-    match: PropTypes.object,
-  };
+import Header from "./Header";
+import Inventory from "./Inventory";
+import Order from "./Order";
+import Fish from "./Fish";
 
-  constructor() {
-    super();
+import { firebase } from "../firebase";
+import sampleFishes from "../sample-fishes";
 
-    this.state = {
-      fishes: {},
-      order: {},
-    };
-  }
+import type { Fish as FishArg } from "../types";
 
-  componentDidMount() {
-    // reinstate localStorage
-    const localStorageRef = localStorage.getItem(this.props.match.params.storeId, this.state.order);
+function App() {
+  const params = useParams();
+  const [state, setState] = useState<any>({ fishes: {}, order: {} });
+
+  console.log(firebase.firestore());
+
+  // useEffect(() => {
+  //     firebase.database().ref(`${storeId}/fishes`).on('value', snapshot => {
+  //         if (snapshot.val()) setFishes(snapshot.val())
+  //     })
+  // }, []);
+
+  // useEffect(() => {
+  //   firebase.database().ref(`${storeId}/fishes`).update(fishes)
+  // }, [fishes])
+
+  useEffect(() => {
+    const localStorageRef = localStorage.getItem(params.storeId);
 
     if (localStorageRef) {
-      this.setState(() => ({ order: JSON.parse(localStorageRef) }));
+      setState((prevState: any) => ({ ...prevState, order: JSON.parse(localStorageRef) }));
     }
 
-    this.ref = base.syncState(`${this.props.match.params.storeId}/fishes`, {
-      context: this,
-      state: 'fishes',
-    });
-  }
+    firebase
+      .database()
+      .ref(`${params.storeId}/fishes`)
+      .on("value", (snapshot) => {
+        console.log("snapshot", snapshot.val());
+        if (snapshot.val()) {
+          setState((prevState: any) => ({ ...prevState, fishes: snapshot.val() }));
+        }
+      });
+  }, [params.storeId, state.fishes]);
 
-  componentDidUpdate() {
-    localStorage.setItem(this.props.match.params.storeId, JSON.stringify(this.state.order));
-  }
+  useEffect(() => {
+    localStorage.setItem(params.storeId, JSON.stringify(state.order));
+  }, [params.storeId, state.order]);
 
-  componentWillUnmount() {
-    base.removeBinding(this.ref);
-  }
+  // useEffect(() => {
+  //   base.removeBinding(this.ref);
+  // }, [])
 
-  addFish = fish => {
-    // Take a copy of the existing state
-    const fishes = { ...this.state.fishes };
-    // Add our new fish to the object
+  function addFish(fish: FishArg) {
+    const fishes = { ...state.fishes };
+
     fishes[`fish${Date.now()}`] = fish;
-    // Set the new state
-    this.setState(() => ({ fishes }));
-  };
 
-  updateFish = (key, updatedFish) => {
-    const fishes = { ...this.state.fishes };
+    setState((prevState: any) => ({ ...prevState, fishes }));
+  }
+
+  function updateFish(key: string, updatedFish: FishArg) {
+    const fishes = { ...state.fishes };
 
     fishes[key] = updatedFish;
 
-    this.setState(() => ({ fishes }));
-  };
-
-  addToOrder = key => {
-    // Take copy of state
-    const order = { ...this.state.order };
-    // Add to order or update number
-    order[key] = order[key] + 1 || 1;
-    // Add to state
-    this.setState(() => ({ order }));
-  };
-
-  deleteOrder = key => {
-    const order = { ...this.state.order };
-    delete order[key];
-    this.setState({ order });
-  };
-
-  loadSampleFishes = () => {
-    this.setState(() => ({ fishes: sampleFishes }));
-  };
-
-  deleteFish = key => {
-    const fishes = { ...this.state.fishes };
-    fishes[key] = null;
-    this.setState({ fishes });
-  };
-
-  render() {
-    return (
-      <div className="catch-of-the-day">
-        <div className="menu">
-          <Header tagline="Fresh Seafood Market" />
-          <ul className="fishes">
-            {Object.keys(this.state.fishes).map(key => (
-              <Fish key={key} index={key} details={this.state.fishes[key]} addToOrder={this.addToOrder} />
-            ))}
-          </ul>
-        </div>
-        <Order fishes={this.state.fishes} order={this.state.order} deleteOrder={this.deleteOrder} />
-        <Inventory
-          addFish={this.addFish}
-          updateFish={this.updateFish}
-          deleteFish={this.deleteFish}
-          loadSampleFishes={this.loadSampleFishes}
-          fishes={this.state.fishes}
-          storeId={this.props.match.params.storeId}
-        />
-      </div>
-    );
+    setState((prevState: any) => ({ ...prevState, fishes }));
   }
+
+  function addToOrder(key: string) {
+    const order = { ...state.order };
+
+    order[key] = order[key] + 1 || 1;
+
+    setState((prevState: any) => ({ ...prevState, order }));
+  }
+
+  function deleteOrder(key: string) {
+    const order = { ...state.order };
+    delete order[key];
+    setState((prevState: any) => ({ ...prevState, order }));
+  }
+
+  function loadSampleFishes() {
+    setState((prevState: any) => ({ ...prevState, fishes: sampleFishes }));
+  }
+
+  function deleteFish(key: string) {
+    const fishes = { ...state.fishes };
+    fishes[key] = null;
+    setState((prevState: any) => ({ ...prevState, fishes }));
+  }
+
+  console.log({ state });
+
+  return (
+    <div className="catch-of-the-day">
+      <div className="menu">
+        <Header tagline="Fresh Seafood Market" />
+        <ul className="fishes">
+          {Object.keys(state.fishes).map((key) => (
+            <Fish key={key} index={key} details={state.fishes[key]} addToOrder={addToOrder} />
+          ))}
+        </ul>
+      </div>
+      <Order fishes={state.fishes} order={state.order} deleteOrder={deleteOrder} />
+      <Inventory
+        addFish={addFish}
+        updateFish={updateFish}
+        deleteFish={deleteFish}
+        loadSampleFishes={loadSampleFishes}
+        fishes={state.fishes}
+        storeId={params.storeId}
+      />
+    </div>
+  );
 }
 
 export default App;

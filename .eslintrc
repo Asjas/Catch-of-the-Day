@@ -4,5 +4,8 @@
     "tsconfigRootDir": ".",
     "project": "tsconfig.json"
   },
-  "rules": {}
+  "rules": {
+    "react/destructuring-assignment": 0,
+    "@typescript-eslint/no-use-before-define": 0
+  }
 }

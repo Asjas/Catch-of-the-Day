@@ -1,10 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { formatPrice } from "../helpers";
 
-import { formatPrice } from '../helpers';
+import type { FishProps } from "../types";
 
-const Fish = ({ addToOrder, index, details: { image, name, desc, price, status } }) => {
-  const isAvailable = status === 'available';
+function Fish({ addToOrder, index, details: { image, name, desc, price, status } }: FishProps) {
+  const isAvailable = status === "available";
+
+  function handleClick() {
+    addToOrder(index);
+  }
 
   return (
     <li className="menu-fish">
@@ -12,28 +15,11 @@ const Fish = ({ addToOrder, index, details: { image, name, desc, price, status }
       <h3 className="fish-name">{name}</h3>
       <span className="price">{formatPrice(price)}</span>
       <p>{desc}</p>
-      <button
-        onClick={() => {
-          addToOrder(index);
-        }}
-        disabled={!isAvailable}
-      >
-        {isAvailable ? 'Add To Order' : 'Sold Out!'}
+      <button type="button" onClick={handleClick} disabled={!isAvailable}>
+        {isAvailable ? "Add To Order" : "Sold Out!"}
       </button>
     </li>
   );
-};
-
-Fish.propTypes = {
-  addToOrder: PropTypes.func,
-  index: PropTypes.string,
-  details: PropTypes.shape({
-    image: PropTypes.string,
-    name: PropTypes.string,
-    desc: PropTypes.string,
-    status: PropTypes.string,
-    price: PropTypes.number,
-  }),
-};
+}
 
 export default Fish;

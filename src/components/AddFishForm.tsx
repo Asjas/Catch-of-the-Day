@@ -1,16 +1,6 @@
 import { FormEvent, useRef } from "react";
 
-interface Fish {
-  name: string;
-  price: number;
-  status: string;
-  desc: string;
-  image: string;
-}
-
-type AddFishFormProps = {
-  addFish({ name, price, status, desc, image }: Fish): void;
-};
+import type { AddFishFormProps } from "../types";
 
 function AddFishForm({ addFish }: AddFishFormProps) {
   const nameRef = useRef<HTMLInputElement>(null);
