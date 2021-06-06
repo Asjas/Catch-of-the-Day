@@ -8,42 +8,47 @@ import type { InventoryProps } from "../types";
 import { firebase } from "../firebase";
 
 function Inventory({ fishes, addFish, updateFish, deleteFish, loadSampleFishes, storeId }: InventoryProps) {
-  const [state, setState] = useState({ uid: null, owner: null });
+  const [state, setState] = useState({ uid: null, owner: "" });
 
-  // const authHandler = useCallback(
-  //   async (authData: any) => {
-  //     const store = await base.fetch(storeId);
+  const authHandler = useCallback(
+    (authData: any) => {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          const { uid } = user;
+          void firebase.database().ref(`${storeId}/owner`).update({ data: uid });
+          setState({
+            uid: authData.user.uid,
+            owner: user.uid,
+          });
+        } else {
+          setState({
+            uid: null,
+            owner: "",
+          });
+        }
+      });
+    },
+    [storeId],
+  );
 
-  //     if (!store.owner) {
-  //       await base.post(`${storeId}/owner`, { data: authData.user.uid });
-  //     }
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        void authHandler({ user });
+      }
+    });
+  }, [authHandler]);
 
-  //     setState({
-  //       uid: authData.user.uid,
-  //       owner: store.owner || authData.user.uid,
-  //     });
-  //   },
-  //   [storeId],
-  // );
+  async function authenticate(provider: any) {
+    const authProvider = new firebase.auth[`${provider}AuthProvider`]();
 
-  // useEffect(() => {
-  //   firebase.auth().onAuthStateChanged((user) => {
-  //     if (user) {
-  //       void authHandler({ user });
-  //     }
-  //   });
-  // }, [authHandler]);
-
-  // function authenticate(provider: any) {
-  //   const authProvider = new firebase.auth[`${provider}AuthProvider`]();
-
-  //   void firebaseApp.auth().signInWithPopup(authProvider).then(authHandler);
-  // }
+    await firebase.auth().signInWithPopup(authProvider).then(authHandler);
+  }
 
   async function logout() {
     await firebase.auth().signOut();
 
-    setState({ uid: null, owner: null });
+    setState({ uid: null, owner: "" });
   }
 
   const Logout = (
@@ -53,9 +58,9 @@ function Inventory({ fishes, addFish, updateFish, deleteFish, loadSampleFishes, 
   );
 
   // Check if they are logged in
-  // if (!state.uid) {
-  //   return <Login authenticate={authenticate} />;
-  // }
+  if (!state.uid) {
+    return <Login authenticate={authenticate} />;
+  }
 
   if (state.uid !== state.owner) {
     return (
