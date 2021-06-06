@@ -15,43 +15,33 @@ function App() {
   const params = useParams();
   const [state, setState] = useState<any>({ fishes: {}, order: {} });
 
-  console.log(firebase.firestore());
+  // Fetch data from firebase and update local `fishes` state
+  useEffect(() => {
+    const fishesRef = firebase.database().ref(`${params.storeId}/fishes`);
 
-  // useEffect(() => {
-  //     firebase.database().ref(`${storeId}/fishes`).on('value', snapshot => {
-  //         if (snapshot.val()) setFishes(snapshot.val())
-  //     })
-  // }, []);
+    fishesRef.on("value", (snapshot) => {
+      const data = snapshot.val();
 
-  // useEffect(() => {
-  //   firebase.database().ref(`${storeId}/fishes`).update(fishes)
-  // }, [fishes])
+      setState((prevState: any) => ({ ...prevState, fishes: data }));
+    });
+  }, [params.storeId]);
 
+  // Update firebase data when local `fishes` state is updated
   useEffect(() => {
     const localStorageRef = localStorage.getItem(params.storeId);
 
+    // Restore `order` data from localstorage
     if (localStorageRef) {
       setState((prevState: any) => ({ ...prevState, order: JSON.parse(localStorageRef) }));
     }
 
-    firebase
-      .database()
-      .ref(`${params.storeId}/fishes`)
-      .on("value", (snapshot) => {
-        console.log("snapshot", snapshot.val());
-        if (snapshot.val()) {
-          setState((prevState: any) => ({ ...prevState, fishes: snapshot.val() }));
-        }
-      });
+    void firebase.database().ref(`${params.storeId}/fishes`).update(state.fishes);
   }, [params.storeId, state.fishes]);
 
+  // Update localstorage when local `order` state is updated
   useEffect(() => {
     localStorage.setItem(params.storeId, JSON.stringify(state.order));
   }, [params.storeId, state.order]);
-
-  // useEffect(() => {
-  //   base.removeBinding(this.ref);
-  // }, [])
 
   function addFish(fish: FishArg) {
     const fishes = { ...state.fishes };
@@ -92,8 +82,6 @@ function App() {
     fishes[key] = null;
     setState((prevState: any) => ({ ...prevState, fishes }));
   }
-
-  console.log({ state });
 
   return (
     <div className="catch-of-the-day">
