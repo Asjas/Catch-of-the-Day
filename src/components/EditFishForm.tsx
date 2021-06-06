@@ -16,7 +16,7 @@ function EditFishForm({ updateFish, deleteFish, index, fish }: EditFishFormProps
     <div className="fish-edit">
       <input type="text" name="name" onChange={handleChange} value={fish.name} />
       <input type="text" name="price" onChange={handleChange} value={fish.price} />
-      <select name="status" onBlur={handleChange} value={fish.status}>
+      <select name="status" onChange={handleChange} value={fish.status}>
         <option value="available">Fresh!</option>
         <option value="unavailable">Sold Out!</option>
       </select>
