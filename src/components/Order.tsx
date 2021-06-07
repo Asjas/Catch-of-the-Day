@@ -1,11 +1,11 @@
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import { formatPrice } from "../helpers";
-import type { OrderProps } from "../types";
+import type { Fish, OrderProps } from "../types";
 
 function Order({ fishes, order, deleteOrder }: OrderProps) {
   function renderOrder(key: string) {
-    const fish = fishes[key];
+    const fish: Fish = fishes[key];
     const count = order[key];
     const isAvailable = fish && fish.status === "available";
     // make sure the fish is loaded before we continue
@@ -45,7 +45,7 @@ function Order({ fishes, order, deleteOrder }: OrderProps) {
   const orderIds = Object.keys(order);
 
   const total = orderIds.reduce((prevTotal, key) => {
-    const fish = fishes[key];
+    const fish: Fish = fishes[key];
     const count = order[key];
     const isAvailable = fish && fish.status === "available";
 
