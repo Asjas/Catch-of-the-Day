@@ -55,5 +55,7 @@ export type OrderProps = {
 };
 
 export type LoginProps = {
-  authenticate(arg1: string): void;
+  authenticate(AuthProvider: AuthProviders): void;
 };
+
+export type AuthProviders = "Github" | "Twitter" | "Google";
