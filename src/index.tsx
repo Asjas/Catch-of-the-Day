@@ -1,8 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 
-import Router from './Router';
+import Router from "./Router";
 
-import './css/style.css';
+import "./css/style.css";
 
-ReactDOM.render(<Router />, document.querySelector('#main'));
+ReactDOM.render(<Router />, document.querySelector("#main"));
