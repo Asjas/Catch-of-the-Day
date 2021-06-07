@@ -50,7 +50,7 @@ export type InventoryProps = {
 
 export type OrderProps = {
   fishes: [Fish];
-  order: [any];
+  order: [Order];
   deleteOrder(id: string): void;
 };
 
